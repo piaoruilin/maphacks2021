@@ -1,64 +1,63 @@
 import React, { memo } from "react";
 import {
-  ZoomableGroup,
-  ComposableMap,
-  Geographies,
-  Geography
+    ZoomableGroup,
+    ComposableMap,
+    Geographies,
+    Geography,
 } from "react-simple-maps";
 
 const geoUrl =
-  "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+    "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const rounded = num => {
-  if (num > 1000000000) {
-    return Math.round(num / 100000000) / 10 + "Bn";
-  } else if (num > 1000000) {
-    return Math.round(num / 100000) / 10 + "M";
-  } else {
-    return Math.round(num / 100) / 10 + "K";
-  }
+function Map ({ setTooltipContent, countriesData, openPopup }) {
+    return (
+        <>
+            <ComposableMap data-tip="" projectionConfig={{ scale: 100 }}>
+                <ZoomableGroup>
+                    <Geographies geography={geoUrl}>
+                        {({ geographies }) =>
+                            geographies.map((geo) => (
+                                <Geography
+                                    className="geography"
+                                    key={geo.rsmKey}
+                                    geography={geo}
+                                    onMouseEnter={() => {
+                                        const { NAME } = geo.properties;
+                                        setTooltipContent(`${NAME}`);
+                                    }}
+                                    onMouseLeave={() => {
+                                        setTooltipContent("");
+                                    }}
+                                    onClick={() => {
+                                        openPopup();
+                                        const { NAME } = geo.properties;
+                                        console.log(`you clicked on ${NAME} ~ ${geo.rsmKey}`);
+                                    }}
+                                    style={{
+                                        default: {
+                                            fill: "#F2F2F2",
+                                            outline: "none",
+                                            stroke: "black"
+                                        },
+                                        hover: {
+                                            fill: "#a8a8a8",
+                                            outline: "none",
+                                            stroke: "black",
+                                            cursor: "pointer",
+                                        },
+                                        active: {
+                                            fill: "#BCF4DE",
+                                            outline: "none",
+                                        },
+                                    }}
+                                />
+                            ))
+                        }
+                    </Geographies>
+                </ZoomableGroup>
+            </ComposableMap>
+        </>
+    );
 };
 
-const MapChart = ({ setTooltipContent }) => {
-  return (
-    <>
-      <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
-        <ZoomableGroup>
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map(geo => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  onMouseEnter={() => {
-                    const { NAME } = geo.properties;
-                    setTooltipContent(`${NAME}`);
-                  }}
-                  onMouseLeave={() => {
-                    setTooltipContent("");
-                  }}
-                  style={{
-                    default: {
-                      fill: "#D6D6DA",
-                      outline: "none"
-                    },
-                    hover: {
-                      fill: "#FFB7C3",
-                      outline: "none"
-                    },
-                    pressed: {
-                      fill: "#BCF4DE",
-                      outline: "none"
-                    }
-                  }}
-                />
-              ))
-            }
-          </Geographies>
-        </ZoomableGroup>
-      </ComposableMap>
-    </>
-  );
-};
-
-export default memo(MapChart);
+export default memo(Map);
