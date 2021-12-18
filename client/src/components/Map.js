@@ -29,13 +29,14 @@ function Map ({ setTooltipContent, countriesData, openPopup }) {
                                         setTooltipContent("");
                                     }}
                                     onClick={() => {
+                                        let colour = #F2F2F2;
                                         openPopup();
                                         const { NAME } = geo.properties;
                                         console.log(`you clicked on ${NAME} ~ ${geo.rsmKey}`);
                                     }}
                                     style={{
                                         default: {
-                                            fill: "#F2F2F2",
+                                            fill: colour,
                                             outline: "none",
                                             stroke: "black"
                                         },

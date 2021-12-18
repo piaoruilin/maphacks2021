@@ -17,7 +17,26 @@ const Styles = styled.div`
  }
 `;
 
-export function DatePickerRange() {
+export default function Form() {
+    return (
+        <>
+            <ul>
+                <h1>Country Name</h1>
+            </ul>
+            <TableDatePicker />
+        </>
+    )
+}
+
+function TableDatePicker() {
+    return (
+        <Styles>
+            <DatePickerRange />
+        </Styles>
+    );
+}
+
+function DatePickerRange() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -56,20 +75,3 @@ export function DatePickerRange() {
     );
 }
 
-export default function TableDatePicker() {
-    return (
-        <Styles>
-            <DatePickerRange />
-        </Styles>
-    );
-}
-
-function Form() {
-    return (
-        <>
-            <ul>
-                <h1>Country Name</h1>
-            </ul>
-        </>
-    )
-}
