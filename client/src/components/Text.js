@@ -1,83 +1,11 @@
 import React, { useState } from "react";
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import styled from "styled-components";
-
-const Styles = styled.div`
- .react-datepicker-wrapper,
- .react-datepicker__input-container,
- .react-datepicker__input-container input {
-   width: 175px;
- }
-
- .react-datepicker__close-icon::before,
- .react-datepicker__close-icon::after {
-   background-color: grey;
- }
-`;
-
-//For the date
-export function DatePickerRange() {
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-
-    return (
-        <div style={{ display: "flex" }}>
-            <DatePicker
-                isClearable
-                filterDate={d => {
-                    return new Date() > d;
-                }}
-                placeholderText="Select Start Date"
-                showTimeSelect
-                dateFormat="MMMM d, yyyy"
-                selected={startDate}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-                onChange={date => setStartDate(date)}
-            />
-            <DatePicker
-                isClearable
-                filterDate={d => {
-                    return new Date() > d;
-                }}
-                placeholderText="Select End Date"
-                showTimeSelect
-                dateFormat="MMMM d, yyyy"
-                selected={endDate}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={startDate}
-                onChange={date => setEndDate(date)}
-            />
-        </div>
-    );
-}
-
-export function TableDatePicker() {
-    return (
-        <Styles>
-            <DatePickerRange />
-        </Styles>
-    );
-}
-
-function Form() {
-    return (
-        <>
-            <ul>
-                <h1>Country Name</h1>
-            </ul>
-        </>
-    )
-}
-
 //For memory keeping text
 function Memory() {
-    const [inputList, setInputList] = useState([{ favMemory: "", favFood: "", favGift: "" }]);
+    const [inputList, setInputList] = useState([{ favMemory: "" }]);
+    const [inputList, setInputList] = useState([{ favFood: "" }]);
+    const [inputList, setInputList] = useState([{ favGift: "" }]);
+
     // handle input change
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
