@@ -1,6 +1,6 @@
 # 🛫 *Chroma World: Paint your beautiful travels!*
 
-[![Thumbnail](https://chuahxisrc/components/images/Chroma World copy.gif)](https://devpost.com/software/travel-in-colours)
+[![Thumbnail](https://raw.githubusercontent.com/chuahxinyu/maphacks2021/main/src/components/images/Chroma%20World%20copy.gif)](https://devpost.com/software/travel-in-colours)
 
 ## 🧠 **Inspiration**
 As avid travellers, we've always wanted a place to store all the memories we made and log our travel experiences into a simple online interface. A web app dedicated just for travelling, and why not make it fun? 🌈
