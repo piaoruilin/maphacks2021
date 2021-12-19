@@ -6,6 +6,7 @@ import Map from "./components/Map";
 import Modal from "react-modal";
 import Form from "./components/Form";
 import { ReactComponent as Header } from "./components/images/CHROMA LD.svg";
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
@@ -45,9 +46,6 @@ function App() {
         resetCurrentCountry();
     }
 
-    // update a country that already exists in loacl storage
-    function updateCountry() {}
-
     function resetCurrentCountry() {
         setCurrentCountry({
             rsmKey: "",
@@ -76,8 +74,22 @@ function App() {
         souvenir: [],
     });
 
+    /* --------------------------------- TOASTS --------------------------------- */
+    const showErrorToast = () => {
+        toast.error("None of the fields are filled!", {
+            position: toast.POSITION.TOP_CENTER,
+        });
+    };
+
+    const showSuccessToast = () => {
+        toast(`Successfully saved!`, {
+            position: toast.POSITION.TOP_CENTER,
+        });
+    }
+
     return (
         <div className="App">
+            <ToastContainer autoClose={2500} />
             <Header height="100%" width="100%">
                 <rect x="0" y="0" width="100%" height="100%" />
             </Header>
@@ -120,6 +132,9 @@ function App() {
                     setCurrentCountry={setCurrentCountry}
                     addCountry={addCountry}
                     closePopup={() => setModalIsOpen(false)}
+                    resetCurrentCountry={resetCurrentCountry}
+                    showErrorToast={showErrorToast}
+                    showSuccessToast={showSuccessToast}
                 />
             </Modal>
         </div>

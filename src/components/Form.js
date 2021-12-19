@@ -2,21 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./Form.css"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import styled from "styled-components";
 import confetti from "canvas-confetti";
-
-const Styles = styled.div`
-    .react-datepicker-wrapper,
-    .react-datepicker__input-container,
-    .react-datepicker__input-container input {
-        width: 175px;
-    }
-
-    .react-datepicker__close-icon::before,
-    .react-datepicker__close-icon::after {
-        background-color: grey;
-    }
-`;
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Form({
     currentCountry,
@@ -24,26 +11,30 @@ export default function Form({
     addCountry,
     closePopup,
     countriesData,
+    showErrorToast,
+    showSuccessToast
 }) {
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    useEffect(() => {
-        // find for country in user's local storage
-        const foundCountry = countriesData.filter(
-            (x) => x.rsmKey === currentCountry.rsmKey
-        )[0];
-        if (foundCountry) {
-            setStartDate(foundCountry.startDate);
-            setEndDate(foundCountry.endDate);
-            setMemoryList(foundCountry.memory);
-            setFoodList(foundCountry.food);
-            setSouvenirList(foundCountry.souvenir);
-        }
-    }, []);
+/* ------------------------------ LOCAL STORAGE ----------------------------- */
+useEffect(() => {
+    // find for country in user's local storage
+    const foundCountry = countriesData.filter(
+        (x) => x.rsmKey === currentCountry.rsmKey
+    )[0];
+    if (foundCountry) {
+        setStartDate(foundCountry.startDate);
+        setEndDate(foundCountry.endDate);
+        setMemoryList(foundCountry.memory);
+        setFoodList(foundCountry.food);
+        setSouvenirList(foundCountry.souvenir);
+    }
+}, []);
 
-    const [memoryList, setMemoryList] = useState([]);
-    const [foodList, setFoodList] = useState([]);
-    const [souvenirList, setSouvenirList] = useState([]);
+/* --------------------------------- STATES --------------------------------- */
+const [memoryList, setMemoryList] = useState([]);
+const [foodList, setFoodList] = useState([]);
+const [souvenirList, setSouvenirList] = useState([]);
+const [startDate, setStartDate] = useState(null);
+const [endDate, setEndDate] = useState(null);
 
     return (
         <>
@@ -80,6 +71,7 @@ export default function Form({
                         currentCountry.souvenir = souvenirList;
                         setCurrentCountry(currentCountry);
                         addCountry(currentCountry);
+                        showSuccessToast();
 
                         // CONFETTI
                         var end = Date.now() + 1 * 1000;
@@ -105,10 +97,12 @@ export default function Form({
                                 requestAnimationFrame(frame);
                             }
                         })();
+
                         closePopup();
                     } else {
                         // Fields are empty
                         // closePopup();
+                        showErrorToast();
                     }
                 }}
             >
