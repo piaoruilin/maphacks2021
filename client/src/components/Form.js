@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
+import confetti from 'canvas-confetti';
 
 const Styles = styled.div`
     .react-datepicker-wrapper,
@@ -63,6 +64,35 @@ export default function Form({
             >
                 SAVE
             </button>
+            <button
+                onClick={() => {
+                    var end = Date.now() + (15 * 1000);
+                    var colors = ['#bb0000', '#ffffff'];
+
+                    (function frame() {
+                        confetti({
+                            particleCount: 2,
+                            angle: 60,
+                            spread: 55,
+                            origin: { x: 0 },
+                            colors: colors
+                        });
+                        confetti({
+                            particleCount: 2,
+                            angle: 120,
+                            spread: 55,
+                            origin: { x: 1 },
+                            colors: colors
+                        });
+
+                        if (Date.now() < end) {
+                            requestAnimationFrame(frame);
+                        }
+                    }());
+                }}
+            >
+                CONFETTI
+            </button>
         </>
     );
 }
@@ -115,7 +145,7 @@ function DatePickerRange({
     );
 }
 
-function favouriteColumn() {}
+function favouriteColumn() { }
 
 //For memory keeping text
 function Favourites() {
@@ -190,3 +220,85 @@ function Favourites() {
         </div>
     );
 }
+
+/* working on the confetti pop up
+const canvasStyles = {
+    position: 'fixed',
+    pointerEvents: 'none',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0
+  }
+
+  export class SchoolPride extends React.Component {
+    constructor(props) {
+      super(props);
+      this.isAnimationEnabled = false;
+      this.animationInstance = null;
+      this.nextTickAnimation = this.nextTickAnimation.bind(this);
+    }
+
+    makeShot = (angle, originX) => {
+      this.animationInstance && this.animationInstance({
+        particleCount: 3,
+        angle,
+        spread: 55,
+        origin: { x: originX },
+        colors: ['#bb0000', '#ffffff'],
+      });
+    }
+
+    nextTickAnimation = () => {
+      this.makeShot(60, 0);
+      this.makeShot(120, 1);
+      if (this.isAnimationEnabled) requestAnimationFrame(this.nextTickAnimation);
+    }
+
+    startAnimation = () => {
+      if (!this.isAnimationEnabled) {
+        this.isAnimationEnabled = true;
+        this.nextTickAnimation();
+      }
+    }
+
+    pauseAnimation = () => {
+      this.isAnimationEnabled = false;
+    }
+
+    stopAnimation = () => {
+      this.isAnimationEnabled = false;
+      this.animationInstance && this.animationInstance.reset();
+    }
+
+    handlerClickStart = () => {
+      this.startAnimation();
+    };
+
+    handlerClickPause = () => {
+      this.pauseAnimation();
+    };
+
+    handlerClickStop = () => {
+      this.stopAnimation();
+    };
+
+    getInstance = (instance) => {
+      this.animationInstance = instance;
+    };
+
+    componentWillUnmount() {
+      this.isAnimationEnabled = false;
+    }
+
+    render() {
+      return (
+        <>
+          <div>
+            <button onClick={this.handlerClickStart}>SAVE</button>
+          </div>
+          <ReactCanvasConfetti refConfetti={this.getInstance} style={canvasStyles}/>
+        </>
+      );
+    }
+  } */
