@@ -71,18 +71,10 @@ function DatePickerRange() {
     );
 }
 
-export function TableDatePicker() {
-    return (
-        <Styles>
-            <DatePickerRange />
-        </Styles>
-    );
-}
-
 //For memory keeping text
-function Memory() {
+export function Memory() {
     const [inputList, setInputList] = useState([{ favMemory: "", favFood: "", favGift: "" }]);
-    // handle input change
+    // Input change
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
         const list = [...inputList];
@@ -90,20 +82,20 @@ function Memory() {
         setInputList(list);
     };
 
-    // handle click event of the Remove button
+    // Remove button
     const handleRemoveClick = index => {
         const list = [...inputList];
         list.splice(index, 1);
         setInputList(list);
     };
 
-    // handle click event of the Add button
+    // Add button
     const handleAddClick = () => {
         setInputList([...inputList, { favMemory: "", favFood: "", favGift: "" }]);
     };
 
     return (
-        <div className="App">
+        <div className="Favourites">
             <h3>What were your favourite parts of the trip?</h3>
             {inputList.map((x, i) => {
                 return (
@@ -140,5 +132,3 @@ function Memory() {
         </div>
     );
 }
-
-export default Memory
