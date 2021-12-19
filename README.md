@@ -1,6 +1,7 @@
 # 🛫 *Chroma World: Paint your beautiful travels!*
 
 [![Thumbnail](https://raw.githubusercontent.com/chuahxinyu/maphacks2021/main/src/components/images/Chroma%20World%20copy.gif)](https://devpost.com/software/travel-in-colours)
+*Winner of MLH MapHacks Hackathon*
 
 ## 🧠 **Inspiration**
 As avid travellers, we've always wanted a place to store all the memories we made and log our travel experiences into a simple online interface. A web app dedicated just for travelling, and why not make it fun? 🌈
