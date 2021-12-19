@@ -17,26 +17,17 @@ function App() {
     useEffect(() => {
         
         if (countriesData.length > 0) {
-            console.log("save local storage")
             const json = JSON.stringify(countriesData);
             localStorage.setItem("countriesData", json);
-            sessionStorage.setItem("countriesData", json);
         }
-        
     }, [countriesData]);
 
     // loading country data from local storage
     useEffect(() => {
-        // const json = localStorage.getItem("countriesData");
-        // const saved = JSON.parse(json);
-        // if (saved) {
-        //     setCountriesData(saved);
-        // }
-        console.log("get from local storage")
-        const json2 = sessionStorage.getItem("countriesData");
-        const saved2 = JSON.parse(json2);
-        if (saved2) {
-            setCountriesData(saved2);
+        const json = localStorage.getItem("countriesData");
+        const saved = JSON.parse(json);
+        if (saved) {
+            setCountriesData(saved);
         }
     }, []);
 
