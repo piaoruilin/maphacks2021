@@ -4,7 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import confetti from "canvas-confetti";
 import "react-toastify/dist/ReactToastify.css";
-import { FaTrash, FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
+import { randomColor } from "randomcolor";
 
 export default function Form({
     currentCountry,
@@ -77,7 +78,7 @@ export default function Form({
 
                         // CONFETTI
                         var end = Date.now() + 1 * 1000;
-                        // var colors = ['#bb0000', '#ffffff'];
+                        var colours = [currentCountry.colour, randomColor(), randomColor()];
 
                         (function frame() {
                             confetti({
@@ -85,14 +86,14 @@ export default function Form({
                                 angle: 60,
                                 spread: 55,
                                 origin: { x: 0 },
-                                // colors: colors
+                                colors: colours
                             });
                             confetti({
                                 particleCount: 2,
                                 angle: 120,
                                 spread: 55,
                                 origin: { x: 1 },
-                                // colors: colors
+                                colors: colours
                             });
 
                             if (Date.now() < end) {
