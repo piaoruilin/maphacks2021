@@ -17,8 +17,24 @@ const Styles = styled.div`
  }
 `;
 
-//For the date
-export function DatePickerRange() {
+export default function Form({ countryName }) {
+    return (
+        <>
+            <h1>{countryName}</h1>
+            <TableDatePicker />
+        </>
+    )
+}
+
+function TableDatePicker() {
+    return (
+        <Styles>
+            <DatePickerRange />
+        </Styles>
+    );
+}
+
+function DatePickerRange() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 

@@ -1,19 +1,32 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
+import { randomColor } from "randomcolor";
 import Map from "./components/Map";
-// import Popup from "./components/Popup";
-import Modal from 'react-modal';
-import Text from './components/Text';
+import Modal from "react-modal";
+import Form from "./components/Form";
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
+    // only stores visited countries' data
     const [countriesData, setCountriesData] = useState([]);
+    // {
+    //     rsmKey: "geo-135",
+    //     colour: "#ff6262",
+    //     startDate: "",
+    //     endDate: "",
+    //     photoUrl: "",
+    //     memory: ["mem1","memory2","memoreh3"],
+    //     food: ["foodx", "FooOd Y"],
+    //     souvenir: ["gift1"]
+    // }
+
     // saving country data to local storage
-    useEffect (() => {
+    useEffect(() => {
         const json = JSON.stringify(countriesData);
         localStorage.setItem("countriesData", json);
-    }, [countriesData])
+    }, [countriesData]);
+
     // loading country data from local storage
     useEffect(() => {
         const json = localStorage.getItem("countriesData");
@@ -21,23 +34,55 @@ function App() {
         if (saved) {
             setCountriesData(saved);
         }
-    }, [])
+    }, []);
 
-    const [modalIsOpen,setModalIsOpen] = useState(false);
-    const [content, setContent] = useState("");
+    /* ------------------------------- ADD COUNTRY ------------------------------ */
+    function addCountry({ rsmKey }) {
+        const newCountry = {
+            rsmKey: rsmKey,
+            colour: randomColor({luminosity: "light"}),
+            startDate: "",
+            endDat: "",
+            photoUrl: "",
+            memory: [],
+            food: [],
+            souvenir: [],
+        };
+        setCountriesData([...countriesData, newCountry]);
+    }
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [tooltipContent, setTooltipContent] = useState("");
+    const [currentCountry, setCurrentCountry] = useState("");
 
     return (
         <div className="App">
             <Map
-                setTooltipContent={setContent}
+                setTooltipContent={setTooltipContent}
                 countriesData={countriesData}
+                setCountriesData={setCountriesData}
                 openPopup={() => setModalIsOpen(true)}
+                setCurrentCountry={setCurrentCountry}
+                addCountry={addCountry}
             />
-            <ReactTooltip>{content}</ReactTooltip>
-            
-            <Modal isOpen={modalIsOpen}>
+            <ReactTooltip>{tooltipContent}</ReactTooltip>
+
+            <Modal
+                isOpen={modalIsOpen}
+                ariaHideApp={false}
+                style={{
+                    overlay: {},
+                    content: {
+                        width: "60vw",
+                        height: "60vh",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                    },
+                }}
+            >
                 <button onClick={() => setModalIsOpen(false)}>x</button>
-                <Text/>
+                <Form countryName={currentCountry} />
             </Modal>
         </div>
     );

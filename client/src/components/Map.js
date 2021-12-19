@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import "../App.css";
 import {
     ZoomableGroup,
     ComposableMap,
@@ -9,55 +10,85 @@ import {
 const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-function Map ({ setTooltipContent, countriesData, openPopup }) {
+function Map({
+    setTooltipContent,
+    countriesData,
+    openPopup,
+    setCurrentCountry,
+    addCountry,
+}) {
     return (
-        <>
-            <ComposableMap data-tip="" projectionConfig={{ scale: 100 }}>
-                <ZoomableGroup>
+        <div>
+            <ComposableMap
+                data-tip=""
+                projectionConfig={{ scale: 200 }}
+                className="map"
+            >
+                <ZoomableGroup
+                    translateExtent={[
+                        [-250, -100],
+                        [1000, 750],
+                    ]}
+                    zoom={1}
+                >
                     <Geographies geography={geoUrl}>
                         {({ geographies }) =>
-                            geographies.map((geo) => (
-                                <Geography
-                                    className="geography"
-                                    key={geo.rsmKey}
-                                    geography={geo}
-                                    onMouseEnter={() => {
-                                        const { NAME } = geo.properties;
-                                        setTooltipContent(`${NAME}`);
-                                    }}
-                                    onMouseLeave={() => {
-                                        setTooltipContent("");
-                                    }}
-                                    onClick={() => {
-                                        openPopup();
-                                        const { NAME } = geo.properties;
-                                        console.log(`you clicked on ${NAME} ~ ${geo.rsmKey}`);
-                                    }}
-                                    style={{
-                                        default: {
-                                            fill: "#F2F2F2",
-                                            outline: "none",
-                                            stroke: "black"
-                                        },
-                                        hover: {
-                                            fill: "#a8a8a8",
-                                            outline: "none",
-                                            stroke: "black",
-                                            cursor: "pointer",
-                                        },
-                                        active: {
-                                            fill: "#BCF4DE",
-                                            outline: "none",
-                                        },
-                                    }}
-                                />
-                            ))
+                            geographies.map((geo) => {
+                                let colour = "#F2F2F2";
+
+                                // find for country in user's local storage
+                                const foundCountry = countriesData.filter(
+                                    (x) => x.rsmKey === geo.rsmKey
+                                )[0];
+                                if (foundCountry) {
+                                    colour = foundCountry.colour;
+                                }
+
+                                return (
+                                    <Geography
+                                        className="geography"
+                                        key={geo.rsmKey}
+                                        geography={geo}
+                                        onMouseEnter={() => {
+                                            const { NAME } = geo.properties;
+                                            setTooltipContent(`${NAME}`);
+                                        }}
+                                        onMouseLeave={() => {
+                                            setTooltipContent("");
+                                        }}
+                                        onClick={() => {
+                                            openPopup();
+                                            const { NAME } = geo.properties;
+                                            setCurrentCountry(`${NAME}`);
+                                            if (!foundCountry) {
+                                                addCountry({
+                                                    rsmKey: geo.rsmKey,
+                                                });
+                                            }
+                                        }}
+                                        style={{
+                                            default: {
+                                                fill: colour,
+                                                outline: "none",
+                                                stroke: "black",
+                                            },
+                                            hover: {
+                                                fill: colour,
+                                                outline: "none",
+                                                stroke: "black",
+                                                cursor: "pointer",
+                                                filter: "brightness(.8)",
+                                            },
+                                        }}
+                                    />
+                                );
+                            })
                         }
                     </Geographies>
                 </ZoomableGroup>
             </ComposableMap>
-        </>
+        </div>
     );
-};
+}
 
 export default memo(Map);

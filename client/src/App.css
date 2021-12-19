@@ -13,6 +13,18 @@ svg {
 }
 
 .class {
-  background-color: #a8a8a8;
+  background-color: #9c4a4a;
 }
 
+
+.map {
+  border: rgb(158, 158, 158) solid 1px;
+  margin-top: 10vh;
+  margin-left: 5vw;
+  height: 80vh;
+  width: 90vw;
+}
+
+.modal {
+  /* background-color: #9c4a4a; */
+}
