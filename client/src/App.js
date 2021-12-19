@@ -4,7 +4,7 @@ import ReactTooltip from "react-tooltip";
 import Map from "./components/Map";
 // import Popup from "./components/Popup";
 import Modal from 'react-modal';
-import Form from './components/Form';
+import Text from './components/Text';
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
@@ -37,7 +37,7 @@ function App() {
             
             <Modal isOpen={modalIsOpen}>
                 <button onClick={() => setModalIsOpen(false)}>x</button>
-                <Form/>
+                <Text/>
             </Modal>
         </div>
     );

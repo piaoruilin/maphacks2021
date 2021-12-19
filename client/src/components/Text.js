@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 
-//For memory keeping text
+//For favourites
 function Memory() {
-    const [inputList, setInputList] = useState([{ favMemory: "" }]);
-    const [inputList, setInputList] = useState([{ favFood: "" }]);
-    const [inputList, setInputList] = useState([{ favGift: "" }]);
-
-    // handle input change
+    const [inputList, setInputList] = useState([{ favMemory: "", favFood: "", favGift: "" }]);
+    // Input change
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
         const list = [...inputList];
@@ -14,21 +11,21 @@ function Memory() {
         setInputList(list);
     };
 
-    // handle click event of the Remove button
+    // Remove button
     const handleRemoveClick = index => {
         const list = [...inputList];
         list.splice(index, 1);
         setInputList(list);
     };
 
-    // handle click event of the Add button
+    // Add button
     const handleAddClick = () => {
         setInputList([...inputList, { favMemory: "", favFood: "", favGift: "" }]);
     };
 
     return (
-        <div className="App">
-            <h3>What were your favourite parts of the trip?</h3>
+        <div className="Favourites">
+            <h2>What were your favourite parts of the trip?</h2>
             {inputList.map((x, i) => {
                 return (
                     <div className="box">

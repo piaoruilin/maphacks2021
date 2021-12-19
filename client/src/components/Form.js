@@ -30,7 +30,6 @@ export function DatePickerRange() {
                     return new Date() > d;
                 }}
                 placeholderText="Select Start Date"
-                showTimeSelect
                 dateFormat="MMMM d, yyyy"
                 selected={startDate}
                 selectsStart
@@ -44,7 +43,6 @@ export function DatePickerRange() {
                     return new Date() > d;
                 }}
                 placeholderText="Select End Date"
-                showTimeSelect
                 dateFormat="MMMM d, yyyy"
                 selected={endDate}
                 selectsEnd
@@ -63,16 +61,6 @@ export function TableDatePicker() {
             <DatePickerRange />
         </Styles>
     );
-}
-
-function Form() {
-    return (
-        <>
-            <ul>
-                <h1>Country Name</h1>
-            </ul>
-        </>
-    )
 }
 
 //For memory keeping text
@@ -137,4 +125,4 @@ function Memory() {
     );
 }
 
-export default Memory;
+export default Memory
