@@ -15,11 +15,9 @@ function App() {
     const [countriesData, setCountriesData] = useState([]);
     // saving country data to local storage
     useEffect(() => {
-        
-        if (countriesData.length > 0) {
+    
             const json = JSON.stringify(countriesData);
             localStorage.setItem("countriesData", json);
-        }
     }, [countriesData]);
 
     // loading country data from local storage
