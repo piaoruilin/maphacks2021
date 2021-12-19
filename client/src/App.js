@@ -5,7 +5,7 @@ import { randomColor } from "randomcolor";
 import Map from "./components/Map";
 import Modal from "react-modal";
 import Form from "./components/Form";
-import { ReactComponent as Header } from './components/images/header-2.svg';
+import { ReactComponent as Header } from './components/images/CHROMA LD.svg';
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
@@ -79,9 +79,9 @@ function App() {
 
     return (
         <div className="App">
-            <div>
-                <Header />
-            </div>
+            <Header viewbox="0 0 100 100" height="100%" width="100%">
+                <rect x="0" y="0" width="100%" height="100%" />
+                </Header>
             <Map
                 setTooltipContent={setTooltipContent}
                 countriesData={countriesData}
