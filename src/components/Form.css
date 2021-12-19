@@ -1,3 +1,25 @@
 .favourites {
     display: flex;
 }
+
+.flex-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.list-item {
+    font-size: 0.7em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* color: rgb(224, 123, 123); */
+}
+
+.trash-btn {
+    color: rgb(224, 123, 123);
+}
+
+.trash-btn:hover {
+    cursor: pointer;
+}

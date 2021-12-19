@@ -12,13 +12,11 @@ function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
     // only stores visited countries' data
     const [countriesData, setCountriesData] = useState([]);
-
     // saving country data to local storage
     useEffect(() => {
         const json = JSON.stringify(countriesData);
         localStorage.setItem("countriesData", json);
     }, [countriesData]);
-
     // loading country data from local storage
     useEffect(() => {
         const json = localStorage.getItem("countriesData");

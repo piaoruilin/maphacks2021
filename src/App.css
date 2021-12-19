@@ -24,6 +24,8 @@ svg {
   width: 90vw;
 }
 
-.modal {
-  /* background-color: #9c4a4a; */
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }

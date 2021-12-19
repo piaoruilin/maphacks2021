@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./Form.css"
+import "./Form.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import confetti from "canvas-confetti";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import { FaTrash, FaTrashAlt } from "react-icons/fa";
 
 export default function Form({
     currentCountry,
@@ -12,29 +13,29 @@ export default function Form({
     closePopup,
     countriesData,
     showErrorToast,
-    showSuccessToast
+    showSuccessToast,
 }) {
-/* ------------------------------ LOCAL STORAGE ----------------------------- */
-useEffect(() => {
-    // find for country in user's local storage
-    const foundCountry = countriesData.filter(
-        (x) => x.rsmKey === currentCountry.rsmKey
-    )[0];
-    if (foundCountry) {
-        setStartDate(foundCountry.startDate);
-        setEndDate(foundCountry.endDate);
-        setMemoryList(foundCountry.memory);
-        setFoodList(foundCountry.food);
-        setSouvenirList(foundCountry.souvenir);
-    }
-}, []);
+    /* ------------------------------ LOCAL STORAGE ----------------------------- */
+    useEffect(() => {
+        // find for country in user's local storage
+        const foundCountry = countriesData.filter(
+            (x) => x.rsmKey === currentCountry.rsmKey
+        )[0];
+        if (foundCountry) {
+            setStartDate(foundCountry.startDate);
+            setEndDate(foundCountry.endDate);
+            setMemoryList(foundCountry.memory);
+            setFoodList(foundCountry.food);
+            setSouvenirList(foundCountry.souvenir);
+        }
+    }, []);
 
-/* --------------------------------- STATES --------------------------------- */
-const [memoryList, setMemoryList] = useState([]);
-const [foodList, setFoodList] = useState([]);
-const [souvenirList, setSouvenirList] = useState([]);
-const [startDate, setStartDate] = useState(null);
-const [endDate, setEndDate] = useState(null);
+    /* --------------------------------- STATES --------------------------------- */
+    const [memoryList, setMemoryList] = useState([]);
+    const [foodList, setFoodList] = useState([]);
+    const [souvenirList, setSouvenirList] = useState([]);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     return (
         <>
@@ -154,7 +155,6 @@ function FavouriteColumn({ favList, setFavList, text }) {
         list.splice(index, 1);
         setFavList(list);
     };
-
     // Add button
     const handleAdd = (event) => {
         event.preventDefault();
@@ -164,7 +164,16 @@ function FavouriteColumn({ favList, setFavList, text }) {
     return (
         <div>
             {favList.map((x, i) => {
-                return <div key={i}>{x}</div>;
+                return (
+                    <div key={i} className="list-item">
+                        {x}
+                        <FaTrashAlt className="trash-btn" onClick={() => {
+                            const list = [...favList];
+                            list.splice(i, 1);
+                            setFavList(list);
+                        }} />
+                    </div>
+                );
             })}
             <form onSubmit={handleAdd}>
                 <input
@@ -192,7 +201,7 @@ function Favourites({
     return (
         <div>
             <h3>What were your favourite parts of the trip?</h3>
-            <div className="favourites">
+            <div className="flex-row">
                 <FavouriteColumn
                     favList={memoryList}
                     setFavList={setMemoryList}
@@ -209,7 +218,6 @@ function Favourites({
                     text={"souvenir"}
                 />
             </div>
-            
         </div>
     );
 }
