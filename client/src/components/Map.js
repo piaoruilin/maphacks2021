@@ -14,8 +14,8 @@ function Map({
     setTooltipContent,
     countriesData,
     openPopup,
+    currentCountry,
     setCurrentCountry,
-    addCountry,
 }) {
     return (
         <div>
@@ -59,12 +59,9 @@ function Map({
                                         onClick={() => {
                                             openPopup();
                                             const { NAME } = geo.properties;
-                                            setCurrentCountry(`${NAME}`);
-                                            if (!foundCountry) {
-                                                addCountry({
-                                                    rsmKey: geo.rsmKey,
-                                                });
-                                            }
+                                            currentCountry.name = NAME;
+                                            currentCountry.rsmKey = geo.rsmKey;
+                                            setCurrentCountry(currentCountry);
                                         }}
                                         style={{
                                             default: {

@@ -37,23 +37,23 @@ function App() {
     }, []);
 
     /* ------------------------------- ADD COUNTRY ------------------------------ */
-    function addCountry({ rsmKey }) {
-        const newCountry = {
-            rsmKey: rsmKey,
-            colour: randomColor({luminosity: "light"}),
-            startDate: "",
-            endDat: "",
-            photoUrl: "",
-            memory: [],
-            food: [],
-            souvenir: [],
-        };
+    function addCountry(newCountry) {
         setCountriesData([...countriesData, newCountry]);
     }
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [tooltipContent, setTooltipContent] = useState("");
-    const [currentCountry, setCurrentCountry] = useState("");
+    const [currentCountry, setCurrentCountry] = useState({
+        rsmKey: "",
+        name: "",
+        colour: randomColor({ luminosity: "light" }),
+        startDate: null,
+        endDate: null,
+        photoUrl: "",
+        memory: [],
+        food: [],
+        souvenir: [],
+    });
 
     return (
         <div className="App">
@@ -62,8 +62,8 @@ function App() {
                 countriesData={countriesData}
                 setCountriesData={setCountriesData}
                 openPopup={() => setModalIsOpen(true)}
+                currentCountry={currentCountry}
                 setCurrentCountry={setCurrentCountry}
-                addCountry={addCountry}
             />
             <ReactTooltip>{tooltipContent}</ReactTooltip>
 
@@ -82,10 +82,15 @@ function App() {
                 }}
             >
                 <button onClick={() => setModalIsOpen(false)}>x</button>
-                <Form countryName={currentCountry} />
+                <Form
+                    currentCountry={currentCountry}
+                    setCurrentCountry={setCurrentCountry}
+                    addCountry={addCountry}
+                    closePopup={() => setModalIsOpen(false)}
+                />
             </Modal>
         </div>
     );
 }
 
-export default App
+export default App;

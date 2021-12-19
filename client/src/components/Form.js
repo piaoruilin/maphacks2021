@@ -5,36 +5,43 @@ import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 
 const Styles = styled.div`
- .react-datepicker-wrapper,
- .react-datepicker__input-container,
- .react-datepicker__input-container input {
-   width: 175px;
- }
+    .react-datepicker-wrapper,
+    .react-datepicker__input-container,
+    .react-datepicker__input-container input {
+        width: 175px;
+    }
 
- .react-datepicker__close-icon::before,
- .react-datepicker__close-icon::after {
-   background-color: grey;
- }
+    .react-datepicker__close-icon::before,
+    .react-datepicker__close-icon::after {
+        background-color: grey;
+    }
 `;
 
-export default function Form({ countryName }) {
+export default function Form({ currentCountry, setCurrentCountry, addCountry, closePopup }) {
     return (
         <>
-            <h1>{countryName}</h1>
-            <TableDatePicker />
+            <h1>{currentCountry.name}</h1>
+            <DatePickerRange currentCountry={currentCountry} setCurrentCountry={setCurrentCountry} />
+            <Favourites />
+            <button
+                onClick={() => {
+                    if (currentCountry.startDate|| currentCountry.endDate 
+                        || currentCountry.photoUrl !== "" || currentCountry.memory.length !== 0
+                        || currentCountry.food.length !== 0 || currentCountry.souvenir.length !== 0) {
+                            addCountry(currentCountry);
+                            closePopup();
+                    } else {
+                        closePopup();
+                    }
+                }}
+            >
+                SAVE
+            </button>
         </>
-    )
-}
-
-function TableDatePicker() {
-    return (
-        <Styles>
-            <DatePickerRange />
-        </Styles>
     );
 }
 
-function DatePickerRange() {
+function DatePickerRange({ currentCountry, setCurrentCountry }) {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -42,7 +49,7 @@ function DatePickerRange() {
         <div style={{ display: "flex" }}>
             <DatePicker
                 isClearable
-                filterDate={d => {
+                filterDate={(d) => {
                     return new Date() > d;
                 }}
                 placeholderText="Select Start Date"
@@ -51,11 +58,15 @@ function DatePickerRange() {
                 selectsStart
                 startDate={startDate}
                 endDate={endDate}
-                onChange={date => setStartDate(date)}
+                onChange={(date) => {
+                    setStartDate(date);
+                    currentCountry.startDate = date;
+                    setCurrentCountry(currentCountry);
+                }}
             />
             <DatePicker
                 isClearable
-                filterDate={d => {
+                filterDate={(d) => {
                     return new Date() > d;
                 }}
                 placeholderText="Select End Date"
@@ -65,15 +76,21 @@ function DatePickerRange() {
                 startDate={startDate}
                 endDate={endDate}
                 minDate={startDate}
-                onChange={date => setEndDate(date)}
+                onChange={(date) => {
+                    setEndDate(date);
+                    currentCountry.endDate = date;
+                    setCurrentCountry(currentCountry);
+                }}
             />
         </div>
     );
 }
 
 //For memory keeping text
-export function Memory() {
-    const [inputList, setInputList] = useState([{ favMemory: "", favFood: "", favGift: "" }]);
+export function Favourites() {
+    const [inputList, setInputList] = useState([
+        { favMemory: "", favFood: "", favGift: "" },
+    ]);
     // Input change
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
@@ -83,7 +100,7 @@ export function Memory() {
     };
 
     // Remove button
-    const handleRemoveClick = index => {
+    const handleRemoveClick = (index) => {
         const list = [...inputList];
         list.splice(index, 1);
         setInputList(list);
@@ -91,7 +108,10 @@ export function Memory() {
 
     // Add button
     const handleAddClick = () => {
-        setInputList([...inputList, { favMemory: "", favFood: "", favGift: "" }]);
+        setInputList([
+            ...inputList,
+            { favMemory: "", favFood: "", favGift: "" },
+        ]);
     };
 
     return (
@@ -99,32 +119,39 @@ export function Memory() {
             <h3>What were your favourite parts of the trip?</h3>
             {inputList.map((x, i) => {
                 return (
-                    <div className="box">
+                    <div className="box" key={i}>
                         <input
                             name="favMemory"
                             placeholder="Favourite Memory"
                             value={x.favMemory}
-                            onChange={e => handleInputChange(e, i)}
+                            onChange={(e) => handleInputChange(e, i)}
                         />
                         <input
                             className="ml10"
                             name="favFood"
                             placeholder="Memorable Restaurant"
                             value={x.favFood}
-                            onChange={e => handleInputChange(e, i)}
+                            onChange={(e) => handleInputChange(e, i)}
                         />
                         <input
                             className="ml10"
                             name="favGift"
                             placeholder="Favourite Souvenir"
                             value={x.favGift}
-                            onChange={e => handleInputChange(e, i)}
+                            onChange={(e) => handleInputChange(e, i)}
                         />
                         <div className="btn-box">
-                            {inputList.length !== 1 && <button
-                                className="mr10"
-                                onClick={() => handleRemoveClick(i)}>Remove</button>}
-                            {inputList.length - 1 === i && <button onClick={handleAddClick}>Add</button>}
+                            {inputList.length !== 1 && (
+                                <button
+                                    className="mr10"
+                                    onClick={() => handleRemoveClick(i)}
+                                >
+                                    Remove
+                                </button>
+                            )}
+                            {inputList.length - 1 === i && (
+                                <button onClick={handleAddClick}>Add</button>
+                            )}
                         </div>
                     </div>
                 );
