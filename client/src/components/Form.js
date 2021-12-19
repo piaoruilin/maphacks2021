@@ -35,10 +35,13 @@ export default function Form({
         if (foundCountry) {
             setStartDate(foundCountry.startDate);
             setEndDate(foundCountry.endDate);
+            setMemoryList(foundCountry.memory);
+            setFoodList(foundCountry.food);
+            setSouvenirList(foundCountry.souvenir);
         }
     }, []);
 
-    const [memoryList, setMemoryList] = useState(["memory1"]);
+    const [memoryList, setMemoryList] = useState([]);
     const [foodList, setFoodList] = useState([]);
     const [souvenirList, setSouvenirList] = useState([]);
 
@@ -60,18 +63,24 @@ export default function Form({
                 souvenirList={souvenirList}
                 setSouvenirList={setSouvenirList}
             />
-            {/* <Favourites1 /> */}
             <button
                 onClick={() => {
                     if (
                         // Adding new country or updating existing country
                         startDate ||
-                        endDate
+                        endDate ||
+                        memoryList.length > 0 ||
+                        foodList.length > 0 ||
+                        souvenirList.length > 0
                     ) {
                         currentCountry.startDate = startDate;
                         currentCountry.endDate = endDate;
+                        currentCountry.memory = memoryList;
+                        currentCountry.food = foodList;
+                        currentCountry.souvenir = souvenirList;
                         setCurrentCountry(currentCountry);
                         addCountry(currentCountry);
+
                         // CONFETTI
                         var end = Date.now() + 1 * 1000;
                         // var colors = ['#bb0000', '#ffffff'];
@@ -210,159 +219,3 @@ function Favourites({
         </div>
     );
 }
-
-//For memory keeping text
-function Favourites1() {
-    const [inputList, setInputList] = useState([
-        { favMemory: "", favFood: "", favGift: "" },
-    ]);
-    // Input change
-    const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        const list = [...inputList];
-        list[index][name] = value;
-        setInputList(list);
-    };
-
-    // Remove button
-    const handleRemoveClick = (index) => {
-        const list = [...inputList];
-        list.splice(index, 1);
-        setInputList(list);
-    };
-
-    // Add button
-    const handleAddClick = () => {
-        setInputList([
-            ...inputList,
-            { favMemory: "", favFood: "", favGift: "" },
-        ]);
-    };
-
-    return (
-        <div className="Favourites">
-            <h3>What were your favourite parts of the trip?</h3>
-            {inputList.map((x, i) => {
-                return (
-                    <div className="box" key={i}>
-                        <input
-                            name="favMemory"
-                            placeholder="Favourite Memory"
-                            value={x.favMemory}
-                            onChange={(e) => handleInputChange(e, i)}
-                        />
-                        <input
-                            className="ml10"
-                            name="favFood"
-                            placeholder="Memorable Restaurant"
-                            value={x.favFood}
-                            onChange={(e) => handleInputChange(e, i)}
-                        />
-                        <input
-                            className="ml10"
-                            name="favGift"
-                            placeholder="Favourite Souvenir"
-                            value={x.favGift}
-                            onChange={(e) => handleInputChange(e, i)}
-                        />
-                        <div className="btn-box">
-                            {inputList.length !== 1 && (
-                                <button
-                                    className="mr10"
-                                    onClick={() => handleRemoveClick(i)}
-                                >
-                                    Remove
-                                </button>
-                            )}
-                            {inputList.length - 1 === i && (
-                                <button onClick={handleAddClick}>Add</button>
-                            )}
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
-    );
-}
-
-/* working on the confetti pop up
-const canvasStyles = {
-    position: 'fixed',
-    pointerEvents: 'none',
-    width: '100%',
-    height: '100%',
-    top: 0,
-    left: 0
-  }
-
-  export class SchoolPride extends React.Component {
-    constructor(props) {
-      super(props);
-      this.isAnimationEnabled = false;
-      this.animationInstance = null;
-      this.nextTickAnimation = this.nextTickAnimation.bind(this);
-    }
-
-    makeShot = (angle, originX) => {
-      this.animationInstance && this.animationInstance({
-        particleCount: 3,
-        angle,
-        spread: 55,
-        origin: { x: originX },
-        colors: ['#bb0000', '#ffffff'],
-      });
-    }
-
-    nextTickAnimation = () => {
-      this.makeShot(60, 0);
-      this.makeShot(120, 1);
-      if (this.isAnimationEnabled) requestAnimationFrame(this.nextTickAnimation);
-    }
-
-    startAnimation = () => {
-      if (!this.isAnimationEnabled) {
-        this.isAnimationEnabled = true;
-        this.nextTickAnimation();
-      }
-    }
-
-    pauseAnimation = () => {
-      this.isAnimationEnabled = false;
-    }
-
-    stopAnimation = () => {
-      this.isAnimationEnabled = false;
-      this.animationInstance && this.animationInstance.reset();
-    }
-
-    handlerClickStart = () => {
-      this.startAnimation();
-    };
-
-    handlerClickPause = () => {
-      this.pauseAnimation();
-    };
-
-    handlerClickStop = () => {
-      this.stopAnimation();
-    };
-
-    getInstance = (instance) => {
-      this.animationInstance = instance;
-    };
-
-    componentWillUnmount() {
-      this.isAnimationEnabled = false;
-    }
-
-    render() {
-      return (
-        <>
-          <div>
-            <button onClick={this.handlerClickStart}>SAVE</button>
-          </div>
-          <ReactCanvasConfetti refConfetti={this.getInstance} style={canvasStyles}/>
-        </>
-      );
-    }
-  } */
