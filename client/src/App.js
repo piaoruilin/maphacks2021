@@ -5,7 +5,7 @@ import { randomColor } from "randomcolor";
 import Map from "./components/Map";
 import Modal from "react-modal";
 import Form from "./components/Form";
-import { ReactComponent as Header } from './components/images/CHROMA LD.svg';
+import { ReactComponent as Header } from "./components/images/CHROMA LD.svg";
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
@@ -29,12 +29,11 @@ function App() {
 
     // add a country to local storage
     function addCountry(newCountry) {
-        
         // find for country in user's local storage
-        const foundCountryIndex = countriesData.findIndex((obj => obj.rsmKey === newCountry.rsmKey));
-        console.log("foundCountryIndex: " + foundCountryIndex);
+        const foundCountryIndex = countriesData.findIndex(
+            (obj) => obj.rsmKey === newCountry.rsmKey
+        );
         if (foundCountryIndex !== -1) {
-            console.log("Update Existing country")
             // Update Country
             countriesData[foundCountryIndex] = newCountry;
             setCountriesData(countriesData);
@@ -47,9 +46,7 @@ function App() {
     }
 
     // update a country that already exists in loacl storage
-    function updateCountry() {
-
-    }
+    function updateCountry() {}
 
     function resetCurrentCountry() {
         setCurrentCountry({
@@ -62,7 +59,7 @@ function App() {
             memory: [],
             food: [],
             souvenir: [],
-        })
+        });
     }
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -83,7 +80,7 @@ function App() {
         <div className="App">
             <Header height="100%" width="100%">
                 <rect x="0" y="0" width="100%" height="100%" />
-                </Header>
+            </Header>
             <Map
                 setTooltipContent={setTooltipContent}
                 countriesData={countriesData}
@@ -109,7 +106,14 @@ function App() {
                     },
                 }}
             >
-                <button onClick={() => {setModalIsOpen(false); resetCurrentCountry();}}>x</button>
+                <button
+                    onClick={() => {
+                        setModalIsOpen(false);
+                        resetCurrentCountry();
+                    }}
+                >
+                    x
+                </button>
                 <Form
                     currentCountry={currentCountry}
                     countriesData={countriesData}

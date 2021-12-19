@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-
+import "./Form.css"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
-import confetti from 'canvas-confetti';
+import confetti from "canvas-confetti";
 
 const Styles = styled.div`
     .react-datepicker-wrapper,
@@ -36,8 +36,12 @@ export default function Form({
             setStartDate(foundCountry.startDate);
             setEndDate(foundCountry.endDate);
         }
-    }, [])
-    
+    }, []);
+
+    const [memoryList, setMemoryList] = useState(["memory1"]);
+    const [foodList, setFoodList] = useState([]);
+    const [souvenirList, setSouvenirList] = useState([]);
+
     return (
         <>
             <h1>{currentCountry.name}</h1>
@@ -48,64 +52,64 @@ export default function Form({
                 setEndDate={setEndDate}
                 countriesData={countriesData}
             />
-            <Favourites />
+            <Favourites
+                memoryList={memoryList}
+                setMemoryList={setMemoryList}
+                foodList={foodList}
+                setFoodList={setFoodList}
+                souvenirList={souvenirList}
+                setSouvenirList={setSouvenirList}
+            />
+            {/* <Favourites1 /> */}
             <button
                 onClick={() => {
-                    if ( // Adding new country or updating existing country
-                        (startDate || endDate)
+                    if (
+                        // Adding new country or updating existing country
+                        startDate ||
+                        endDate
                     ) {
                         currentCountry.startDate = startDate;
                         currentCountry.endDate = endDate;
                         setCurrentCountry(currentCountry);
                         addCountry(currentCountry);
+                        // CONFETTI
+                        var end = Date.now() + 1 * 1000;
+                        // var colors = ['#bb0000', '#ffffff'];
+
+                        (function frame() {
+                            confetti({
+                                particleCount: 2,
+                                angle: 60,
+                                spread: 55,
+                                origin: { x: 0 },
+                                // colors: colors
+                            });
+                            confetti({
+                                particleCount: 2,
+                                angle: 120,
+                                spread: 55,
+                                origin: { x: 1 },
+                                // colors: colors
+                            });
+
+                            if (Date.now() < end) {
+                                requestAnimationFrame(frame);
+                            }
+                        })();
                         closePopup();
-                    } else { // Fields are empty
-                        console.log("[Form] Fields are empty")
-                        closePopup();
+                    } else {
+                        // Fields are empty
+                        // closePopup();
                     }
                 }}
             >
                 SAVE
             </button>
-            <button
-                onClick={() => {
-                    var end = Date.now() + (15 * 1000);
-                    var colors = ['#bb0000', '#ffffff'];
-
-                    (function frame() {
-                        confetti({
-                            particleCount: 2,
-                            angle: 60,
-                            spread: 55,
-                            origin: { x: 0 },
-                            colors: colors
-                        });
-                        confetti({
-                            particleCount: 2,
-                            angle: 120,
-                            spread: 55,
-                            origin: { x: 1 },
-                            colors: colors
-                        });
-
-                        if (Date.now() < end) {
-                            requestAnimationFrame(frame);
-                        }
-                    }());
-                }}
-            >
-                CONFETTI
-            </button>
         </>
     );
 }
 
-function DatePickerRange({
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-}) {
+function DatePickerRange({ startDate, setStartDate, endDate, setEndDate }) {
     return (
         <div style={{ display: "flex" }}>
             <DatePicker
@@ -139,10 +143,76 @@ function DatePickerRange({
     );
 }
 
-function favouriteColumn() { }
+function FavouriteColumn({ favList, setFavList, text }) {
+    const [newItem, setNewItem] = useState("");
+    // Remove button
+    const handleRemoveClick = (index) => {
+        const list = [...favList];
+        list.splice(index, 1);
+        setFavList(list);
+    };
+
+    // Add button
+    const handleAdd = (event) => {
+        event.preventDefault();
+        setFavList([...favList, newItem]);
+        setNewItem("");
+    };
+    return (
+        <div>
+            {favList.map((x, i) => {
+                return <div key={i}>{x}</div>;
+            })}
+            <form onSubmit={handleAdd}>
+                <input
+                    className="ml10"
+                    name="favourite"
+                    placeholder={`favourite ${text}`}
+                    value={newItem}
+                    onChange={(e) => setNewItem(e.target.value)}
+                />
+                <div className="btn-box">
+                    <button type="submit">Add</button>
+                </div>
+            </form>
+        </div>
+    );
+}
+function Favourites({
+    memoryList,
+    setMemoryList,
+    foodList,
+    setFoodList,
+    souvenirList,
+    setSouvenirList,
+}) {
+    return (
+        <div>
+            <h3>What were your favourite parts of the trip?</h3>
+            <div className="favourites">
+                <FavouriteColumn
+                    favList={memoryList}
+                    setFavList={setMemoryList}
+                    text={"memory"}
+                />
+                <FavouriteColumn
+                    favList={foodList}
+                    setFavList={setFoodList}
+                    text={"food"}
+                />
+                <FavouriteColumn
+                    favList={souvenirList}
+                    setFavList={setSouvenirList}
+                    text={"souvenir"}
+                />
+            </div>
+            
+        </div>
+    );
+}
 
 //For memory keeping text
-function Favourites() {
+function Favourites1() {
     const [inputList, setInputList] = useState([
         { favMemory: "", favFood: "", favGift: "" },
     ]);

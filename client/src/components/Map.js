@@ -43,7 +43,6 @@ function Map({
                                 )[0];
                                 
                                 if (foundCountry) {
-                                    console.log("[Map] found key for" + foundCountry.rsmKey)
                                     colour = foundCountry.colour;
                                 }
 
