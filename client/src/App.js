@@ -29,19 +29,21 @@ function App() {
 
     // add a country to local storage
     function addCountry(newCountry) {
+        
         // find for country in user's local storage
-        const foundCountry = countriesData.filter(
-            (x) => x.rsmKey === newCountry.rsmKey
-        )[0];
-        if (foundCountry) {
+        const foundCountryIndex = countriesData.findIndex((obj => obj.rsmKey === newCountry.rsmKey));
+        console.log("foundCountryIndex: " + foundCountryIndex);
+        if (foundCountryIndex !== -1) {
+            console.log("Update Existing country")
             // Update Country
-            
+            countriesData[foundCountryIndex] = newCountry;
+            setCountriesData(countriesData);
         } else {
             // Add new country
             newCountry.colour = randomColor({ luminosity: "light" });
             setCountriesData([...countriesData, newCountry]);
-            resetCurrentCountry();
         }
+        resetCurrentCountry();
     }
 
     // update a country that already exists in loacl storage
@@ -79,7 +81,7 @@ function App() {
 
     return (
         <div className="App">
-            <Header viewbox="0 0 100 100" height="100%" width="100%">
+            <Header height="100%" width="100%">
                 <rect x="0" y="0" width="100%" height="100%" />
                 </Header>
             <Map
@@ -107,7 +109,7 @@ function App() {
                     },
                 }}
             >
-                <button onClick={() => setModalIsOpen(false)}>x</button>
+                <button onClick={() => {setModalIsOpen(false); resetCurrentCountry();}}>x</button>
                 <Form
                     currentCountry={currentCountry}
                     countriesData={countriesData}

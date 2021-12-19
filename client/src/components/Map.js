@@ -41,7 +41,9 @@ function Map({
                                 const foundCountry = countriesData.filter(
                                     (x) => x.rsmKey === geo.rsmKey
                                 )[0];
+                                
                                 if (foundCountry) {
+                                    console.log("[Map] found key for" + foundCountry.rsmKey)
                                     colour = foundCountry.colour;
                                 }
 
@@ -64,7 +66,7 @@ function Map({
                                                 (x) => x.rsmKey === geo.rsmKey
                                             )[0];
                                             if (foundCountry) {
-                                                console.log("Country exists - loading local storage data")
+                                                resetCurrentCountry();
                                                 currentCountry = foundCountry
                                                 setCurrentCountry(currentCountry);
                                             } else {
@@ -74,8 +76,6 @@ function Map({
                                                 currentCountry.rsmKey = geo.rsmKey;
                                                 setCurrentCountry(currentCountry);
                                             }
-                                            console.log("Current Country in Map");
-                                            console.log(currentCountry);
                                         }}
                                         style={{
                                             default: {

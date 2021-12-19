@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -27,37 +27,40 @@ export default function Form({
 }) {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    useEffect(() => {
+        // find for country in user's local storage
+        const foundCountry = countriesData.filter(
+            (x) => x.rsmKey === currentCountry.rsmKey
+        )[0];
+        if (foundCountry) {
+            setStartDate(foundCountry.startDate);
+            setEndDate(foundCountry.endDate);
+        }
+    }, [])
+    
     return (
         <>
             <h1>{currentCountry.name}</h1>
             <DatePickerRange
-                currentCountry={currentCountry}
-                setCurrentCountry={setCurrentCountry}
                 startDate={startDate}
                 setStartDate={setStartDate}
                 endDate={endDate}
                 setEndDate={setEndDate}
+                countriesData={countriesData}
             />
             <Favourites />
             <button
                 onClick={() => {
-                    // Add new country
-
-                    // Update existing country
-
-                    // Fields are empty
-
-                    if (
-                        currentCountry.startDate ||
-                        currentCountry.endDate ||
-                        currentCountry.photoUrl !== "" ||
-                        currentCountry.memory.length !== 0 ||
-                        currentCountry.food.length !== 0 ||
-                        currentCountry.souvenir.length !== 0
+                    if ( // Adding new country or updating existing country
+                        (startDate || endDate)
                     ) {
+                        currentCountry.startDate = startDate;
+                        currentCountry.endDate = endDate;
+                        setCurrentCountry(currentCountry);
                         addCountry(currentCountry);
                         closePopup();
-                    } else {
+                    } else { // Fields are empty
+                        console.log("[Form] Fields are empty")
                         closePopup();
                     }
                 }}
@@ -98,8 +101,6 @@ export default function Form({
 }
 
 function DatePickerRange({
-    currentCountry,
-    setCurrentCountry,
     startDate,
     setStartDate,
     endDate,
@@ -108,20 +109,17 @@ function DatePickerRange({
     return (
         <div style={{ display: "flex" }}>
             <DatePicker
-                // isClearable
+                isClearable
                 filterDate={(d) => {
                     return new Date() > d;
                 }}
                 placeholderText="Select Start Date"
                 dateFormat="MMMM d, yyyy"
-                selected={currentCountry.startDate}
+                selected={startDate}
                 selectsStart
-                startDate={currentCountry.startDate}
-                endDate={currentCountry.endDate}
-                onChange={(date) => {
-                    currentCountry.startDate = date;
-                    setCurrentCountry(currentCountry);
-                }}
+                startDate={startDate}
+                endDate={endDate}
+                onChange={(date) => setStartDate(date)}
             />
             <DatePicker
                 isClearable
@@ -132,14 +130,10 @@ function DatePickerRange({
                 dateFormat="MMMM d, yyyy"
                 selected={endDate}
                 selectsEnd
-                startDate={currentCountry.startDate}
+                startDate={startDate}
                 endDate={endDate}
-                minDate={currentCountry.startDate}
-                onChange={(date) => {
-                    setEndDate(date);
-                    currentCountry.endDate = date;
-                    setCurrentCountry(currentCountry);
-                }}
+                minDate={startDate}
+                onChange={(date) => setEndDate(date)}
             />
         </div>
     );

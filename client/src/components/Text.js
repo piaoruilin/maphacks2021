@@ -28,7 +28,7 @@ function Memory() {
             <h2>What were your favourite parts of the trip?</h2>
             {inputList.map((x, i) => {
                 return (
-                    <div className="box">
+                    <div className="box" key={i}>
                         <input
                             name="favMemory"
                             placeholder="Favourite Memory"
