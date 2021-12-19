@@ -5,7 +5,7 @@ import { randomColor } from "randomcolor";
 import Map from "./components/Map";
 import Modal from "react-modal";
 import Form from "./components/Form";
-// import { ReactComponent as Header } from 'client/src/components/images/header-2.svg';
+import { ReactComponent as Header } from './components/images/header-2.svg';
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
@@ -32,7 +32,7 @@ function App() {
         newCountry.colour = randomColor({ luminosity: "light" });
         console.log(countriesData)
         setCountriesData([...countriesData, newCountry]);
-        console.log('after: '+ countriesData)
+        console.log('after: ' + countriesData)
         setCurrentCountry({
             rsmKey: "",
             name: "",
@@ -62,6 +62,9 @@ function App() {
 
     return (
         <div className="App">
+            <div>
+                <Header />
+            </div>
             <Map
                 setTooltipContent={setTooltipContent}
                 countriesData={countriesData}
