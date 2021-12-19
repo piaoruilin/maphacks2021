@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-
+import "../App.css";
 import {
     ZoomableGroup,
     ComposableMap,
@@ -15,13 +15,22 @@ function Map({
     countriesData,
     openPopup,
     setCurrentCountry,
-    addCountry
+    addCountry,
 }) {
-
     return (
-        <>
-            <ComposableMap data-tip="" projectionConfig={{ scale: 150 }}>
-                <ZoomableGroup>
+        <div>
+            <ComposableMap
+                data-tip=""
+                projectionConfig={{ scale: 200 }}
+                className="map"
+            >
+                <ZoomableGroup
+                    translateExtent={[
+                        [-250, -100],
+                        [1000, 750],
+                    ]}
+                    zoom={1}
+                >
                     <Geographies geography={geoUrl}>
                         {({ geographies }) =>
                             geographies.map((geo) => {
@@ -52,7 +61,9 @@ function Map({
                                             const { NAME } = geo.properties;
                                             setCurrentCountry(`${NAME}`);
                                             if (!foundCountry) {
-                                                addCountry({rsmKey: geo.rsmKey})
+                                                addCountry({
+                                                    rsmKey: geo.rsmKey,
+                                                });
                                             }
                                         }}
                                         style={{
@@ -76,7 +87,7 @@ function Map({
                     </Geographies>
                 </ZoomableGroup>
             </ComposableMap>
-        </>
+        </div>
     );
 }
 

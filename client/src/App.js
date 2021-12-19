@@ -1,11 +1,10 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
-import { randomColor } from 'randomcolor'
+import { randomColor } from "randomcolor";
 import Map from "./components/Map";
-import Modal from 'react-modal';
-import Form from './components/Form';
-
+import Modal from "react-modal";
+import Form from "./components/Form";
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
@@ -23,10 +22,10 @@ function App() {
     // }
 
     // saving country data to local storage
-    useEffect (() => {
+    useEffect(() => {
         const json = JSON.stringify(countriesData);
         localStorage.setItem("countriesData", json);
-    }, [countriesData])
+    }, [countriesData]);
 
     // loading country data from local storage
     useEffect(() => {
@@ -35,24 +34,24 @@ function App() {
         if (saved) {
             setCountriesData(saved);
         }
-    }, [])
+    }, []);
 
-/* ------------------------------- ADD COUNTRY ------------------------------ */
+    /* ------------------------------- ADD COUNTRY ------------------------------ */
     function addCountry({ rsmKey }) {
         const newCountry = {
             rsmKey: rsmKey,
-            colour: randomColor(),
+            colour: randomColor({luminosity: "light"}),
             startDate: "",
             endDat: "",
             photoUrl: "",
             memory: [],
             food: [],
-            souvenir: []
-        }
+            souvenir: [],
+        };
         setCountriesData([...countriesData, newCountry]);
     }
 
-    const [modalIsOpen,setModalIsOpen] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [tooltipContent, setTooltipContent] = useState("");
     const [currentCountry, setCurrentCountry] = useState("");
 
@@ -67,12 +66,24 @@ function App() {
                 addCountry={addCountry}
             />
             <ReactTooltip>{tooltipContent}</ReactTooltip>
-            
-            <Modal isOpen={modalIsOpen} ariaHideApp={false}>
+
+            <Modal
+                isOpen={modalIsOpen}
+                ariaHideApp={false}
+                style={{
+                    overlay: {},
+                    content: {
+                        width: "60vw",
+                        height: "60vh",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                    },
+                }}
+            >
                 <button onClick={() => setModalIsOpen(false)}>x</button>
-                <Form countryName={currentCountry}/>
+                <Form countryName={currentCountry} />
             </Modal>
-            
         </div>
     );
 }

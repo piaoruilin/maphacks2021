@@ -20,9 +20,7 @@ const Styles = styled.div`
 export default function Form({ countryName }) {
     return (
         <>
-            <ul>
-                <h1>{countryName}</h1>
-            </ul>
+            <h1>{countryName}</h1>
             <TableDatePicker />
         </>
     )
