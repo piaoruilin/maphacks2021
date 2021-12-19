@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# 🛫 *Chroma World: Paint your beautiful travels!*
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![Thumbnail](https://chuahxisrc/components/images/Chroma World copy.gif)](https://devpost.com/software/travel-in-colours)
 
-## Available Scripts
+## 🧠 **Inspiration**
+As avid travellers, we've always wanted a place to store all the memories we made and log our travel experiences into a simple online interface. A web app dedicated just for travelling, and why not make it fun? 🌈
 
-In the project directory, you can run:
+## 💻 What it does
+* **Log** : Enter all the specific memories you want to keep in Chroma World. Ranging from the most memorable restaurant you ate in, to the best souvenir you bought!
+* **Laugh** : The super fun and colourful interface with different countries in different colours will excite anyone to travel more!
+* **Look** : Drown yourself in memories of travelling, and look back at your achievements - how many countries did you travel to in 2021?
 
-### `npm start`
+## 🛠 **How It Was Built**
+* `html`
+* `css`
+* `javascript`
+* `react`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🏃🏻 **How To Run It**
+```
+$ npm install
+$ npm start
+```
+Website should be runnning on ```localhost:3000```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 📅 **What's next for Chroma World**
+* Sign in using cloud accounts like Google, GitHub, etc.
+* Live sharing and updates with other users of Chroma World.
+* Authentication methods to verify users all around the world.
