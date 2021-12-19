@@ -54,6 +54,7 @@ export default function Form({
                 setFoodList={setFoodList}
                 souvenirList={souvenirList}
                 setSouvenirList={setSouvenirList}
+                showErrorToast={showErrorToast}
             />
             <button
                 onClick={() => {
@@ -147,10 +148,10 @@ function DatePickerRange({ startDate, setStartDate, endDate, setEndDate }) {
     );
 }
 
-function FavouriteColumn({ favList, setFavList, text }) {
+function FavouriteColumn({ favList, setFavList, text, showErrorToast }) {
     const [newItem, setNewItem] = useState("");
     // Remove button
-    const handleRemoveClick = (index) => {
+    const handleRemove = (index) => {
         const list = [...favList];
         list.splice(index, 1);
         setFavList(list);
@@ -158,8 +159,14 @@ function FavouriteColumn({ favList, setFavList, text }) {
     // Add button
     const handleAdd = (event) => {
         event.preventDefault();
-        setFavList([...favList, newItem]);
+        if (!newItem) {
+            showErrorToast("The field is empty!");
+        } else {
+            setFavList([...favList, newItem]);
         setNewItem("");
+        }
+        
+        
     };
     return (
         <div>
@@ -168,9 +175,7 @@ function FavouriteColumn({ favList, setFavList, text }) {
                     <div key={i} className="list-item">
                         {x}
                         <FaTrashAlt className="trash-btn" onClick={() => {
-                            const list = [...favList];
-                            list.splice(i, 1);
-                            setFavList(list);
+                            handleRemove(i)
                         }} />
                     </div>
                 );
@@ -197,6 +202,7 @@ function Favourites({
     setFoodList,
     souvenirList,
     setSouvenirList,
+    showErrorToast
 }) {
     return (
         <div>
@@ -206,16 +212,19 @@ function Favourites({
                     favList={memoryList}
                     setFavList={setMemoryList}
                     text={"memory"}
+                    showErrorToast={showErrorToast}
                 />
                 <FavouriteColumn
                     favList={foodList}
                     setFavList={setFoodList}
                     text={"food"}
+                    showErrorToast={showErrorToast}
                 />
                 <FavouriteColumn
                     favList={souvenirList}
                     setFavList={setSouvenirList}
                     text={"souvenir"}
+                    showErrorToast={showErrorToast}
                 />
             </div>
         </div>

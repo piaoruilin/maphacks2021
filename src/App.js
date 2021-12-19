@@ -73,8 +73,8 @@ function App() {
     });
 
     /* --------------------------------- TOASTS --------------------------------- */
-    const showErrorToast = () => {
-        toast.error("None of the fields are filled!", {
+    const showErrorToast = (errorMessage) => {
+        toast.error(errorMessage ? errorMessage : "None of the fields are filled!", {
             position: toast.POSITION.TOP_CENTER,
         });
     };
