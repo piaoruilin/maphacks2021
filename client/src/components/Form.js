@@ -17,19 +17,45 @@ const Styles = styled.div`
     }
 `;
 
-export default function Form({ currentCountry, setCurrentCountry, addCountry, closePopup, countriesData }) {
+export default function Form({
+    currentCountry,
+    setCurrentCountry,
+    addCountry,
+    closePopup,
+    countriesData,
+}) {
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
     return (
         <>
             <h1>{currentCountry.name}</h1>
-            <DatePickerRange currentCountry={currentCountry} setCurrentCountry={setCurrentCountry} />
+            <DatePickerRange
+                currentCountry={currentCountry}
+                setCurrentCountry={setCurrentCountry}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+            />
             <Favourites />
             <button
                 onClick={() => {
-                    if (currentCountry.startDate|| currentCountry.endDate 
-                        || currentCountry.photoUrl !== "" || currentCountry.memory.length !== 0
-                        || currentCountry.food.length !== 0 || currentCountry.souvenir.length !== 0) {
-                            addCountry(currentCountry);
-                            closePopup();
+                    // Add new country
+
+                    // Update existing country
+
+                    // Fields are empty
+
+                    if (
+                        currentCountry.startDate ||
+                        currentCountry.endDate ||
+                        currentCountry.photoUrl !== "" ||
+                        currentCountry.memory.length !== 0 ||
+                        currentCountry.food.length !== 0 ||
+                        currentCountry.souvenir.length !== 0
+                    ) {
+                        addCountry(currentCountry);
+                        closePopup();
                     } else {
                         closePopup();
                     }
@@ -41,25 +67,28 @@ export default function Form({ currentCountry, setCurrentCountry, addCountry, cl
     );
 }
 
-function DatePickerRange({ currentCountry, setCurrentCountry }) {
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-
+function DatePickerRange({
+    currentCountry,
+    setCurrentCountry,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+}) {
     return (
         <div style={{ display: "flex" }}>
             <DatePicker
-                isClearable
+                // isClearable
                 filterDate={(d) => {
                     return new Date() > d;
                 }}
                 placeholderText="Select Start Date"
                 dateFormat="MMMM d, yyyy"
-                selected={startDate}
+                selected={currentCountry.startDate}
                 selectsStart
-                startDate={startDate}
-                endDate={endDate}
+                startDate={currentCountry.startDate}
+                endDate={currentCountry.endDate}
                 onChange={(date) => {
-                    setStartDate(date);
                     currentCountry.startDate = date;
                     setCurrentCountry(currentCountry);
                 }}
@@ -73,9 +102,9 @@ function DatePickerRange({ currentCountry, setCurrentCountry }) {
                 dateFormat="MMMM d, yyyy"
                 selected={endDate}
                 selectsEnd
-                startDate={startDate}
+                startDate={currentCountry.startDate}
                 endDate={endDate}
-                minDate={startDate}
+                minDate={currentCountry.startDate}
                 onChange={(date) => {
                     setEndDate(date);
                     currentCountry.endDate = date;
@@ -86,9 +115,7 @@ function DatePickerRange({ currentCountry, setCurrentCountry }) {
     );
 }
 
-function favouriteColumn() {
-    
-}
+function favouriteColumn() {}
 
 //For memory keeping text
 function Favourites() {

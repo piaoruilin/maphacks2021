@@ -16,6 +16,7 @@ function Map({
     openPopup,
     currentCountry,
     setCurrentCountry,
+    resetCurrentCountry
 }) {
     return (
         <div>
@@ -58,10 +59,23 @@ function Map({
                                         }}
                                         onClick={() => {
                                             openPopup();
-                                            const { NAME } = geo.properties;
-                                            currentCountry.name = NAME;
-                                            currentCountry.rsmKey = geo.rsmKey;
-                                            setCurrentCountry(currentCountry);
+                                            // find for country in user's local storage
+                                            const foundCountry = countriesData.filter(
+                                                (x) => x.rsmKey === geo.rsmKey
+                                            )[0];
+                                            if (foundCountry) {
+                                                console.log("Country exists - loading local storage data")
+                                                currentCountry = foundCountry
+                                                setCurrentCountry(currentCountry);
+                                            } else {
+                                                const { NAME } = geo.properties;
+                                                resetCurrentCountry();
+                                                currentCountry.name = NAME;
+                                                currentCountry.rsmKey = geo.rsmKey;
+                                                setCurrentCountry(currentCountry);
+                                            }
+                                            console.log("Current Country in Map");
+                                            console.log(currentCountry);
                                         }}
                                         style={{
                                             default: {

@@ -27,12 +27,29 @@ function App() {
         }
     }, []);
 
-    /* ------------------------------- ADD COUNTRY ------------------------------ */
+    // add a country to local storage
     function addCountry(newCountry) {
-        newCountry.colour = randomColor({ luminosity: "light" });
-        console.log(countriesData)
-        setCountriesData([...countriesData, newCountry]);
-        console.log('after: ' + countriesData)
+        // find for country in user's local storage
+        const foundCountry = countriesData.filter(
+            (x) => x.rsmKey === newCountry.rsmKey
+        )[0];
+        if (foundCountry) {
+            // Update Country
+            
+        } else {
+            // Add new country
+            newCountry.colour = randomColor({ luminosity: "light" });
+            setCountriesData([...countriesData, newCountry]);
+            resetCurrentCountry();
+        }
+    }
+
+    // update a country that already exists in loacl storage
+    function updateCountry() {
+
+    }
+
+    function resetCurrentCountry() {
         setCurrentCountry({
             rsmKey: "",
             name: "",
@@ -43,7 +60,7 @@ function App() {
             memory: [],
             food: [],
             souvenir: [],
-        });
+        })
     }
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -72,6 +89,7 @@ function App() {
                 openPopup={() => setModalIsOpen(true)}
                 currentCountry={currentCountry}
                 setCurrentCountry={setCurrentCountry}
+                resetCurrentCountry={resetCurrentCountry}
             />
             <ReactTooltip>{tooltipContent}</ReactTooltip>
 
