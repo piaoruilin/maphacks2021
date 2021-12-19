@@ -10,16 +10,6 @@ function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
     // only stores visited countries' data
     const [countriesData, setCountriesData] = useState([]);
-    // {
-    //     rsmKey: "geo-135",
-    //     colour: "#ff6262",
-    //     startDate: "",
-    //     endDate: "",
-    //     photoUrl: "",
-    //     memory: ["mem1","memory2","memoreh3"],
-    //     food: ["foodx", "FooOd Y"],
-    //     souvenir: ["gift1"]
-    // }
 
     // saving country data to local storage
     useEffect(() => {
@@ -38,7 +28,21 @@ function App() {
 
     /* ------------------------------- ADD COUNTRY ------------------------------ */
     function addCountry(newCountry) {
+        newCountry.colour = randomColor({ luminosity: "light" });
+        console.log(countriesData)
         setCountriesData([...countriesData, newCountry]);
+        console.log('after: '+ countriesData)
+        setCurrentCountry({
+            rsmKey: "",
+            name: "",
+            colour: "",
+            startDate: null,
+            endDate: null,
+            photoUrl: "",
+            memory: [],
+            food: [],
+            souvenir: [],
+        });
     }
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -46,7 +50,7 @@ function App() {
     const [currentCountry, setCurrentCountry] = useState({
         rsmKey: "",
         name: "",
-        colour: randomColor({ luminosity: "light" }),
+        colour: "",
         startDate: null,
         endDate: null,
         photoUrl: "",
@@ -84,6 +88,7 @@ function App() {
                 <button onClick={() => setModalIsOpen(false)}>x</button>
                 <Form
                     currentCountry={currentCountry}
+                    countriesData={countriesData}
                     setCurrentCountry={setCurrentCountry}
                     addCountry={addCountry}
                     closePopup={() => setModalIsOpen(false)}

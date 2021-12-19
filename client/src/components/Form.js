@@ -17,7 +17,7 @@ const Styles = styled.div`
     }
 `;
 
-export default function Form({ currentCountry, setCurrentCountry, addCountry, closePopup }) {
+export default function Form({ currentCountry, setCurrentCountry, addCountry, closePopup, countriesData }) {
     return (
         <>
             <h1>{currentCountry.name}</h1>
@@ -86,8 +86,12 @@ function DatePickerRange({ currentCountry, setCurrentCountry }) {
     );
 }
 
+function favouriteColumn() {
+    
+}
+
 //For memory keeping text
-export function Favourites() {
+function Favourites() {
     const [inputList, setInputList] = useState([
         { favMemory: "", favFood: "", favGift: "" },
     ]);
