@@ -5,6 +5,7 @@ import { randomColor } from "randomcolor";
 import Map from "./components/Map";
 import Modal from "react-modal";
 import Form from "./components/Form";
+// import { ReactComponent as Header } from 'client/src/components/images/header-2.svg';
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
