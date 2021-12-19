@@ -29,3 +29,7 @@ svg {
   align-items: center;
   justify-content: space-evenly;
 }
+
+.btn:hover {
+  cursor: pointer;
+}

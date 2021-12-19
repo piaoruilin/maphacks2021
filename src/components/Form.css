@@ -23,3 +23,13 @@
 .trash-btn:hover {
     cursor: pointer;
 }
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contents {
+    padding: 0 10%;
+}

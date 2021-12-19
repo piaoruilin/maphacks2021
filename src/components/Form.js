@@ -6,6 +6,7 @@ import confetti from "canvas-confetti";
 import "react-toastify/dist/ReactToastify.css";
 import { FaTrashAlt } from "react-icons/fa";
 import { randomColor } from "randomcolor";
+import { FaTimes } from "react-icons/fa";
 
 export default function Form({
     currentCountry,
@@ -15,6 +16,7 @@ export default function Form({
     countriesData,
     showErrorToast,
     showSuccessToast,
+    resetCurrentCountry,
 }) {
     /* ------------------------------ LOCAL STORAGE ----------------------------- */
     useEffect(() => {
@@ -39,8 +41,17 @@ export default function Form({
     const [endDate, setEndDate] = useState(null);
 
     return (
-        <>
-            <h1>{currentCountry.name}</h1>
+        <div className="contents">
+            <div className="header">
+                <h1>{currentCountry.name}</h1>
+                <FaTimes
+                    onClick={() => {
+                        closePopup();
+                        resetCurrentCountry();
+                    }}
+                    className="btn"
+                />
+            </div>
             <DatePickerRange
                 startDate={startDate}
                 setStartDate={setStartDate}
@@ -78,7 +89,11 @@ export default function Form({
 
                         // CONFETTI
                         var end = Date.now() + 1 * 1000;
-                        var colours = [currentCountry.colour, randomColor(), randomColor()];
+                        var colours = [
+                            currentCountry.colour,
+                            randomColor(),
+                            randomColor(),
+                        ];
 
                         (function frame() {
                             confetti({
@@ -86,14 +101,14 @@ export default function Form({
                                 angle: 60,
                                 spread: 55,
                                 origin: { x: 0 },
-                                colors: colours
+                                colors: colours,
                             });
                             confetti({
                                 particleCount: 2,
                                 angle: 120,
                                 spread: 55,
                                 origin: { x: 1 },
-                                colors: colours
+                                colors: colours,
                             });
 
                             if (Date.now() < end) {
@@ -111,7 +126,7 @@ export default function Form({
             >
                 SAVE
             </button>
-        </>
+        </div>
     );
 }
 
@@ -164,10 +179,8 @@ function FavouriteColumn({ favList, setFavList, text, showErrorToast }) {
             showErrorToast("The field is empty!");
         } else {
             setFavList([...favList, newItem]);
-        setNewItem("");
+            setNewItem("");
         }
-        
-        
     };
     return (
         <div>
@@ -175,9 +188,12 @@ function FavouriteColumn({ favList, setFavList, text, showErrorToast }) {
                 return (
                     <div key={i} className="list-item">
                         {x}
-                        <FaTrashAlt className="trash-btn" onClick={() => {
-                            handleRemove(i)
-                        }} />
+                        <FaTrashAlt
+                            className="trash-btn"
+                            onClick={() => {
+                                handleRemove(i);
+                            }}
+                        />
                     </div>
                 );
             })}
@@ -203,7 +219,7 @@ function Favourites({
     setFoodList,
     souvenirList,
     setSouvenirList,
-    showErrorToast
+    showErrorToast,
 }) {
     return (
         <div>

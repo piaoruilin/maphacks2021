@@ -6,7 +6,8 @@ import Map from "./components/Map";
 import Modal from "react-modal";
 import Form from "./components/Form";
 import { ReactComponent as Header } from "./components/images/CHROMA LD.svg";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
+
 
 function App() {
     /* ---------------------------- LOCAL STORAGE --------------------------- */
@@ -74,16 +75,19 @@ function App() {
 
     /* --------------------------------- TOASTS --------------------------------- */
     const showErrorToast = (errorMessage) => {
-        toast.error(errorMessage ? errorMessage : "None of the fields are filled!", {
-            position: toast.POSITION.TOP_CENTER,
-        });
+        toast.error(
+            errorMessage ? errorMessage : "None of the fields are filled!",
+            {
+                position: toast.POSITION.TOP_CENTER,
+            }
+        );
     };
 
     const showSuccessToast = () => {
         toast(`Successfully saved!`, {
             position: toast.POSITION.TOP_CENTER,
         });
-    }
+    };
 
     return (
         <div className="App">
@@ -116,14 +120,6 @@ function App() {
                     },
                 }}
             >
-                <button
-                    onClick={() => {
-                        setModalIsOpen(false);
-                        resetCurrentCountry();
-                    }}
-                >
-                    x
-                </button>
                 <Form
                     currentCountry={currentCountry}
                     countriesData={countriesData}
